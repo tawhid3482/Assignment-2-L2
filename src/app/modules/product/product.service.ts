@@ -11,7 +11,13 @@ const getAllProductsDB = async () => {
   return result;
 };
 
+const getSingleProductDB = async (_id) => {
+  const result = await ProductModel.findOne({ _id });
+  return result;
+};
+
 export const productServices = {
   createProductIntoDB,
   getAllProductsDB,
+  getSingleProductDB,
 };
