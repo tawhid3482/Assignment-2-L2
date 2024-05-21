@@ -16,8 +16,14 @@ const getSingleProductDB = async (_id) => {
   return result;
 };
 
+const getUpdateSingleProductDB = async (_id, updateData) => {
+  const result = await ProductModel.updateOne({ _id }, { $set: updateData });
+  return result;
+};
+
 export const productServices = {
   createProductIntoDB,
   getAllProductsDB,
   getSingleProductDB,
+  getUpdateSingleProductDB,
 };

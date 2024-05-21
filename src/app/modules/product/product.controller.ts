@@ -44,8 +44,48 @@ const getSingleProducts = async (req: Request, res: Response) => {
   }
 };
 
+const updateSingleProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const updateData = req.body;
+
+    const result = await productServices.getUpdateSingleProductDB(
+      productId,
+      updateData,
+    );
+    res.status(200).json({
+      success: true,
+      message: 'Product updated successfully',
+      data: result,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const deleteSingleProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const updateData = req.body;
+
+    const result = await productServices.getUpdateSingleProductDB(
+      productId,
+      updateData,
+    );
+    res.status(200).json({
+      success: true,
+      message: 'Product updated successfully',
+      data: result,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const ProductControllers = {
   createProduct,
   getAllProducts,
   getSingleProducts,
+  updateSingleProduct,
+  deleteSingleProduct,
 };

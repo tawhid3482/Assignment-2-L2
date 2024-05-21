@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(cors());
 
 // application route
-app.use('/', ProductRoute);
+app.use('/api/products', ProductRoute);
 
 const getController = (req: Request, res: Response) => {
   res.send('Server is running');
