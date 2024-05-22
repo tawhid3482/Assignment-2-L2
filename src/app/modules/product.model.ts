@@ -13,13 +13,16 @@ const variantSchema = new Schema<Variant>({
 });
 
 const productSchema = new Schema<Product>({
-  name: { type: String, required: true },
+  name: { type: String, required: [true, 'name is required'] },
   description: { type: String },
-  price: { type: Number, required: true },
-  category: { type: String, required: true },
-  tags: { type: [String], required: true },
-  variants: { type: [variantSchema], required: true },
-  inventory: { type: inventorySchema, required: true },
+  price: { type: Number, required: [true, 'price is required'] },
+  category: { type: String, required: [true, 'category is required'] },
+  tags: { type: [String], required: [true, 'tags is required'] },
+  variants: { type: [variantSchema], required: [true, 'variants is required'] },
+  inventory: {
+    type: inventorySchema,
+    required: [true, 'inventory is required'],
+  },
 });
 
 export const ProductModel = model<Product>('Product', productSchema);

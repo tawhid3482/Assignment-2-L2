@@ -5,15 +5,14 @@ const createOrder = async (req: Request, res: Response) => {
   try {
     // Extracting order data from the request body
     const orderData = req.body;
-
     // Validate the request body
     if (!orderData || !orderData.productId || !orderData.quantity) {
       return res.status(400).json({
         success: false,
-        message: 'Invalid order data. Ensure productId and quantity are provided.',
+        message:
+          'Invalid order data. Ensure productId and quantity are provided.',
       });
     }
-
     // Create the order and update the inventory
     const result = await orderServices.createOrderIntoDB(orderData);
 
@@ -23,21 +22,28 @@ const createOrder = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    if (error.message === 'Insufficient quantity available in inventory') {
-      res.status(400).json({
-        success: false,
-        message: error.message,
-      });
-    } else if (error.message === 'Product not found') {
-      res.status(404).json({
-        success: false,
-        message: error.message,
-      });
+    if (error instanceof Error) {
+      if (error.message === 'Insufficient quantity available in inventory') {
+        res.status(400).json({
+          success: false,
+          message: error.message,
+        });
+      } else if (error.message === 'Product not found') {
+        res.status(404).json({
+          success: false,
+          message: error.message,
+        });
+      } else {
+        res.status(500).json({
+          success: false,
+          message: 'Failed to create order',
+          error: error.message,
+        });
+      }
     } else {
       res.status(500).json({
         success: false,
-        message: 'Failed to create order',
-        error: error.message,
+        message: 'An unknown error occurred',
       });
     }
   }

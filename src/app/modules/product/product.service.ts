@@ -16,7 +16,7 @@ const getSingleProductDB = async (_id: string) => {
   return result;
 };
 
-const getUpdateSingleProductDB = async (_id: string, updateData) => {
+const getUpdateSingleProductDB = async (_id: string, updateData: Product) => {
   const result = await ProductModel.updateOne({ _id }, { $set: updateData });
   return result;
 };
