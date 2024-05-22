@@ -13,15 +13,13 @@ const createProduct = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      message: 'Product is created successfully',
+      message: 'Product created successfully!',
       data: result,
     });
-  } catch (error: any) {
-    console.log(error);
+  } catch (error) {
     res.status(400).json({
       success: false,
       message: 'Failed to create product',
-      error: error.message,
     });
   }
 };
@@ -46,7 +44,10 @@ const getAllProducts = async (req: Request, res: Response) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    res.status(200).json({
+      success: true,
+      message: 'Products not fetched successfully',
+    });
   }
 };
 
@@ -60,7 +61,10 @@ const getSingleProducts = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    console.log(error);
+    res.status(200).json({
+      success: false,
+      message: 'Product not found',
+    });
   }
 };
 
@@ -68,10 +72,11 @@ const updateSingleProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
     const updateData = req.body;
+    const zodParsedData = productValidationSchema.parse(updateData);
 
     const result = await productServices.getUpdateSingleProductDB(
       productId,
-      updateData,
+      zodParsedData,
     );
     res.status(200).json({
       success: true,
@@ -79,7 +84,10 @@ const updateSingleProduct = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    console.error(error);
+    res.status(400).json({
+      success: false,
+      message: 'Failed to update product',
+    });
   }
 };
 
@@ -94,7 +102,10 @@ const deleteSingleProduct = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    console.error(error);
+    res.status(400).json({
+      success: false,
+      message: 'Product not deleted',
+    });
   }
 };
 
