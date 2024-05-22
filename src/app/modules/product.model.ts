@@ -13,9 +13,9 @@ const variantSchema = new Schema<Variant>({
 });
 
 const productSchema = new Schema<Product>({
-  name: { type: String, required: [true, 'name is required'] },
-  description: { type: String },
-  price: { type: Number, required: [true, 'price is required'] },
+  name: { type: String, required: [true, 'name is required'], trim: true },
+  description: { type: String, trim: true },
+  price: { type: Number, required: [true, 'price is required'], trim: true },
   category: { type: String, required: [true, 'category is required'] },
   tags: { type: [String], required: [true, 'tags is required'] },
   variants: { type: [variantSchema], required: [true, 'variants is required'] },

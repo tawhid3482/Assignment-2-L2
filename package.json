@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start:prod": "node ./dist/server.js",
-    "start:dev":"ts-node-dev --respawn --transpile-only src/server.ts",
+    "start:dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
     "lint": "eslint src --ignore-path .eslintignore --ext .ts",
     "lint:fix": "npx eslint src --fix",
@@ -36,6 +36,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "mongoose": "^8.4.0"
+    "mongoose": "^8.4.0",
+    "zod": "^3.23.8"
   }
 }
