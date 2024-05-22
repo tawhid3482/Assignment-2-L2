@@ -19,12 +19,23 @@ const createProduct = async (req: Request, res: Response) => {
 
 const getAllProducts = async (req: Request, res: Response) => {
   try {
-    const result = await productServices.getAllProductsDB();
-    res.status(200).json({
-      success: true,
-      message: 'Products get successfully',
-      data: result,
-    });
+    const searchTerm = req.query.searchTerm as string;
+    let result;
+    if (searchTerm) {
+      result = await productServices.getProductsBySearchTerm(searchTerm);
+      res.status(200).json({
+        success: true,
+        message: `Products matching search term '${searchTerm}' fetched successfully!`,
+        data: result,
+      });
+    } else {
+      result = await productServices.getAllProductsDB();
+      res.status(200).json({
+        success: true,
+        message: 'Products fetched successfully',
+        data: result,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -66,15 +77,11 @@ const updateSingleProduct = async (req: Request, res: Response) => {
 const deleteSingleProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
-    const updateData = req.body;
 
-    const result = await productServices.getUpdateSingleProductDB(
-      productId,
-      updateData,
-    );
+    const result = await productServices.deleteSingleProductDB(productId);
     res.status(200).json({
       success: true,
-      message: 'Product updated successfully',
+      message: 'Product deleted successfully',
       data: result,
     });
   } catch (error) {

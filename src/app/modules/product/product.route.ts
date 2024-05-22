@@ -5,11 +5,13 @@ const router = express.Router();
 
 // call controller function
 
-router.post('/', ProductControllers.createProduct);
-router.get('/', ProductControllers.getAllProducts);
-router.get('/:productId', ProductControllers.getSingleProducts);
+router.post('/products', ProductControllers.createProduct);
 
-router.put('/:productId', ProductControllers.updateSingleProduct);
-router.delete('/:productId', ProductControllers.);
+router.get('/products/:productId', ProductControllers.getSingleProducts);
+
+router.get('/products', ProductControllers.getAllProducts);
+
+router.put('/products/:productId', ProductControllers.updateSingleProduct);
+router.delete('/products/:productId', ProductControllers.deleteSingleProduct);
 
 export const ProductRoute = router;

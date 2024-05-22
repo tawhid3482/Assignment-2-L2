@@ -11,14 +11,32 @@ const getAllProductsDB = async () => {
   return result;
 };
 
-const getSingleProductDB = async (_id) => {
+const getSingleProductDB = async (_id: string) => {
   const result = await ProductModel.findOne({ _id });
   return result;
 };
 
-const getUpdateSingleProductDB = async (_id, updateData) => {
+const getUpdateSingleProductDB = async (_id: string, updateData) => {
   const result = await ProductModel.updateOne({ _id }, { $set: updateData });
   return result;
+};
+
+const deleteSingleProductDB = async (_id: string) => {
+  const result = await ProductModel.deleteOne({ _id });
+  return result;
+};
+
+const getProductsBySearchTerm = async (searchTerm: string) => {
+  const allProducts = await ProductModel.find();
+  const filteredProducts = allProducts.filter(
+    (product) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.tags.some((tag) =>
+        tag.toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
+  );
+  return filteredProducts;
 };
 
 export const productServices = {
@@ -26,4 +44,6 @@ export const productServices = {
   getAllProductsDB,
   getSingleProductDB,
   getUpdateSingleProductDB,
+  deleteSingleProductDB,
+  getProductsBySearchTerm,
 };
