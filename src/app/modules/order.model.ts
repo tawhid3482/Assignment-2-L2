@@ -9,6 +9,7 @@ const ordersSchema = new Schema<Order>({
     trim: true,
   },
   price: { type: Number, required: [true, 'price is required'], trim: true },
-  quantity: { type: String, required: [true, 'quantity is required'] },
+  quantity: { type: Number, required: [true, 'quantity is required'] },
 });
+
 export const OrderModel = model<Order>('Orders', ordersSchema);
